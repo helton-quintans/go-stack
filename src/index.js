@@ -6,9 +6,38 @@ const app = express();
 
 const projects = [];
 
-app.get('/', (req, res) => {
-    console.log('Atendendo a requisição');
-    return res.json( {message: "Hello world"} );
+app.get('/projects', (req, res) => {
+    console.log('Answering GET request');
+    return res.json([
+        'Projeto 1',
+        'Projeto 2',
+    ]);
+});
+
+app.post('/projects',(req, res) => {
+    console.log('Answering POST request');
+    return res.json([
+        'Projeto 1',
+        'Projeto 2',
+        'Projeto 3',
+    ]);
+});
+
+app.put('/projects/:id',(req, res) => {
+    console.log('Answering PUT request');
+    return res.json([
+        'Projeto 1',
+        'Projeto 2',
+        'Projeto 4',
+    ]);
+});
+
+app.delete('/projects/:id',(req, res) => {
+    console.log('Answering PUT request');
+    return res.json([
+        'Projeto 1',
+        'Projeto 3',
+    ]);
 });
 
 app.listen(3334, () => {
