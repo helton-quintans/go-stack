@@ -1,5 +1,5 @@
 const express = require('express');
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4, validate } = require('uuid');
 
 const app = express();
 
@@ -15,6 +15,14 @@ function logRquests(req, res, next) {
     next(); // next middleware
     console.timeEnd(logLabel);
 };
+
+function validateProjectId(req, res, next){
+    const { id } = req.params;
+    if (!validate(id)){
+        return res.status(400).json( { error: 'Invalide project ID'} );
+    };
+    return next();
+}
 
 app.use(logRquests)
 
@@ -42,7 +50,7 @@ app.post('/projects', (req, res) => {
     return res.json(project);
 });
 
-app.put('/projects/:id', (req, res) => {
+app.put('/projects/:id', validateProjectId, (req, res) => {
     console.log('Answering PUT request');
 
     //como obter o id dentro do código:
@@ -67,7 +75,7 @@ app.put('/projects/:id', (req, res) => {
     return res.json(project);
 });
 
-app.delete('/projects/:id', (req, res) => {
+app.delete('/projects/:id', validateProjectId,(req, res) => {
     console.log('Answering PUT request');
     // obtendo o id
     const {id} = req.params
