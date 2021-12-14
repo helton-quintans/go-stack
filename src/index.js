@@ -25,6 +25,7 @@ function validateProjectId(req, res, next){
 }
 
 app.use(logRquests)
+app.use('/projects/:id', validateProjectId)
 
 
 app.get('/projects', (req, res) => {
@@ -50,7 +51,7 @@ app.post('/projects', (req, res) => {
     return res.json(project);
 });
 
-app.put('/projects/:id', validateProjectId, (req, res) => {
+app.put('/projects/:id', (req, res) => {
     console.log('Answering PUT request');
 
     //como obter o id dentro do código:
@@ -75,7 +76,7 @@ app.put('/projects/:id', validateProjectId, (req, res) => {
     return res.json(project);
 });
 
-app.delete('/projects/:id', validateProjectId,(req, res) => {
+app.delete('/projects/:id', (req, res) => {
     console.log('Answering PUT request');
     // obtendo o id
     const {id} = req.params
