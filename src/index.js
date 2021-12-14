@@ -7,11 +7,23 @@ app.use(express.json());
 
 const projects = [];
 
+//Middleware:
+function logRquests(req, res, next) {
+    const {method, url} = req;
+    const logLabel = `[${method.toUpperCase()}] ${url}`;
+    console.time(logLabel);
+    next(); // next middleware
+    console.timeEnd(logLabel);
+};
+
+app.use(logRquests)
+
+
 app.get('/projects', (req, res) => {
     console.log('Answering GET request');
     const { title } = req.query;
 
-    //includes retorna True or false
+    //includes return True or false
     const results = title 
         ? projects.filter(project => project.title.includes(title))
         : projects;
